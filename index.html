@@ -10,6 +10,12 @@
 </head>
 <body>
   <h2>Moisture Chart – PK Silo</h2>
+  <label for="startDateInput">Start Date: </label>
+  <input type="date" id="startDateInput">
+  <label for="endDateInput" style="margin-left: 20px;">End Date: </label>
+  <input type="date" id="endDateInput">
+  <button onclick="loadChart()" style="margin-left: 20px;">Load Chart</button>
+  <br><br>
   <canvas id="myChart" width="1200" height="650"></canvas>
 
   <script>
@@ -17,68 +23,65 @@
     const field = 1;
     const apiKey = "BL9H0JXPJEA08H3G";
 
-    const endDate = new Date(); // current date & time
-    const startDate = new Date();
-    startDate.setDate(endDate.getDate() - 7); // 7 days before now
+    const startInput = document.getElementById("startDateInput").value;
+    const endInput = document.getElementById("endDateInput").value;
+
+    const startDate = new Date(startInput + "T00:00:00Z");
+    const endDate = new Date(endInput + "T23:59:59Z");
 
     const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&results=8000`;
+    function loadChart() {
+  const startInput = document.getElementById("startDateInput").value;
+  const endInput = document.getElementById("endDateInput").value;
 
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const feeds = data.feeds.filter(entry => {
-          const t = new Date(entry.created_at);
-          return t >= startDate && t <= endDate;
-        });
+  const startDate = new Date(startInput + "T00:00:00Z");
+  const endDate = new Date(endInput + "T23:59:59Z");
 
-        const timestamps = feeds.map(entry => new Date(entry.created_at).toLocaleString());
-        const values = feeds.map(entry => parseFloat(entry[`field${field}`]));
+  const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&results=8000`;
 
-        const ctx = document.getElementById("myChart").getContext("2d");
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: timestamps,
-            datasets: [{
-              label: "Moisture (%)",
-              data: values,
-              borderColor: "#0000FF",
-              backgroundColor: "rgba(0,0,255,0.1)",
-              fill: false,
-              pointRadius: 0.5,
-              borderWidth: 2
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                min: -2,
-                max: 20,
-                title: {
-                  display: true,
-                  text: 'Moisture (%)'
-                }
-              },
-              x: {
-                ticks: {
-                  autoSkip: true,
-                  maxTicksLimit: 20
-                },
-                title: {
-                  display: true,
-                  text: 'Timestamp'
-                }
-              }
-            },
-            plugins: {
-              legend: { display: true },
-              tooltip: { mode: 'index', intersect: false }
-            },
-            responsive: false,
-            maintainAspectRatio: false
-          }
-        });
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const feeds = data.feeds.filter(entry => {
+        const t = new Date(entry.created_at);
+        return t >= startDate && t <= endDate;
       });
-  </script>
+
+      const timestamps = feeds.map(entry => new Date(entry.created_at).toLocaleString());
+      const values = feeds.map(entry => parseFloat(entry[`field${field}`]));
+
+      const ctx = document.getElementById("myChart").getContext("2d");
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: timestamps,
+          datasets: [{
+            label: "Moisture (%)",
+            data: values,
+            borderColor: "#0000FF",
+            backgroundColor: "rgba(0,0,255,0.1)",
+            fill: false,
+            pointRadius: 0.5,
+            borderWidth: 2
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              min: -2,
+              max: 20
+            },
+            x: {
+              ticks: { autoSkip: true, maxTicksLimit: 20 }
+            }
+          },
+          responsive: false,
+          maintainAspectRatio: false
+        }
+      });
+    });
+}
+   
+</script>
 </body>
 </html>
