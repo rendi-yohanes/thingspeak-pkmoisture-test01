@@ -17,8 +17,9 @@
     const field = 1;
     const apiKey = "BL9H0JXPJEA08H3G";
 
-    const startDate = new Date("2025-03-15T00:00:00Z");
-    const endDate = new Date("2025-12-31T23:59:59Z");
+    const endDate = new Date(); // current date & time
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 7); // 7 days before now
 
     const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&results=8000`;
 
