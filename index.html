@@ -3,6 +3,8 @@
 <head>
   <title>ThingSpeak Chart.js Viewer</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.min.js"></script>
   <style>
     body { font-family: sans-serif; background-color: #f0f0f0; padding: 20px; }
     canvas { background-color: #fff; border: 1px solid #ccc; }
@@ -11,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-05 16:44</strong>
+  GitHub Version: <strong>2025-05-05 16:49</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -110,7 +112,7 @@
           });
         });
      // Update link to raw ThingSpeak chart
-    const thingSpeakLink = `https://thingspeak.com/channels/${channelId}/charts/${field}?start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&color=0000FF&yaxismin=-2&yaxismax=20`;
+    const thingSpeakLink = url;
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
     } // end of function loadChart()
