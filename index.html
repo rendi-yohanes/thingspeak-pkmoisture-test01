@@ -11,7 +11,7 @@
 <body>
   <h2>Moisture Chart – PK Silo</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-05 16:22</strong>
+  GitHub Version: <strong>2025-05-05 16:27</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -28,6 +28,7 @@
     const channelId = "2793071";
     const field = 1;
     const apiKey = "BL9H0JXPJEA08H3G";
+    let moistureChart = null;
 
     function loadChart() {
       const startInput = document.getElementById("startDateInput").value;
@@ -50,7 +51,12 @@
           const values = feeds.map(entry => parseFloat(entry[`field${field}`]));
     
           const ctx = document.getElementById("myChart").getContext("2d");
-          new Chart(ctx, {
+          
+          if (moistureChart !== null) {
+            moistureChart.destroy();
+          }
+          
+          moistureChart = new Chart(ctx, {
             type: 'line',
             data: {
               labels: timestamps,
