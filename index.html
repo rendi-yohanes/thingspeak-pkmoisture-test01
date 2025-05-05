@@ -11,7 +11,7 @@
 <body>
   <h2>Moisture Chart – PK Silo</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-05 16:18</strong>
+  GitHub Version: <strong>2025-05-05 16:22</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -28,12 +28,6 @@
     const channelId = "2793071";
     const field = 1;
     const apiKey = "BL9H0JXPJEA08H3G";
-
-    const startInput = document.getElementById("startDateInput").value;
-    const endInput = document.getElementById("endDateInput").value;
-
-    const startDate = new Date(startInput + "T00:00:00Z");
-    const endDate = new Date(endInput + "T23:59:59Z");
 
     function loadChart() {
       const startInput = document.getElementById("startDateInput").value;
@@ -85,7 +79,12 @@
             }
           });
         });
-    }
+     // Update link to raw ThingSpeak chart
+    const thingSpeakLink = `https://thingspeak.com/channels/${channelId}/charts/${field}?start=${startInput}%2000:00:00&end=${endInput}%2023:59:59&color=0000FF&yaxismin=-2&yaxismax=20`;
+    document.getElementById("tsLink").href = thingSpeakLink;
+    document.getElementById("tsLink").textContent = thingSpeakLink;
+    } // end of function loadChart()
+
 
 window.onload = function() {
   const today = new Date();
@@ -98,10 +97,7 @@ window.onload = function() {
   loadChart(); // auto-load on page open
 }
 
-// Update link to raw ThingSpeak chart
-const thingSpeakLink = `https://thingspeak.com/channels/${channelId}/charts/${field}?start=${startInput}%2000:00:00&end=${endInput}%2023:59:59&color=0000FF&yaxismin=-2&yaxismax=20`;
-document.getElementById("tsLink").href = thingSpeakLink;
-document.getElementById("tsLink").textContent = thingSpeakLink;
+
     
 </script>
 </body>
