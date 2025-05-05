@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ThingSpeak Chart Viewer</title>
+</head>
+<body>
+  <h2>PK Silo Moisture Chart</h2>
+
+  <button onclick="shiftDays(-1)">⬅️ Previous Day</button>
+  <button onclick="shiftDays(1)">Next Day ➡️</button>
+
+  <br><br>
+  <iframe id="chart" width="700" height="400" style="border: 1px solid #ccc;"></iframe>
+
+  <script>
+    const channelID = "123456";  // <-- your channel ID
+    const field = 1;
+    const timezone = "Asia/Jakarta";
+
+    let currentDate = new Date();
+
+    function formatDate(date) {
+      return date.toISOString().split("T")[0]; // YYYY-MM-DD
+    }
+
+    function updateChart() {
+      const start = new Date(currentDate);
+      const end = new Date(currentDate);
+      end.setDate(end.getDate() + 1);
+
+      const url = `https://thingspeak.com/channels/${channelID}/charts/${field}?dynamic=true&start=${formatDate(start)}&end=${formatDate(end)}&timezone=${timezone}`;
+      document.getElementById("chart").src = url;
+    }
+
+    function shiftDays(days) {
+      currentDate.setDate(currentDate.getDate() + days);
+      updateChart();
+    }
+
+    // Load initial chart
+    updateChart();
+  </script>
+</body>
+</html>
