@@ -1,45 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ThingSpeak Chart Viewer</title>
+  <title>ThingSpeak Chart.js Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: sans-serif; background-color: #f0f0f0; padding: 20px; }
+    canvas { background-color: #fff; border: 1px solid #ccc; }
+  </style>
 </head>
 <body>
-  <h2>PK Silo Moisture Chart</h2>
-
-  <button onclick="shiftDays(-1)">⬅️ Previous Day</button>
-  <button onclick="shiftDays(1)">Next Day ➡️</button>
-
-  <br><br>
-  <iframe id="chart" width="700" height="400" style="border: 1px solid #ccc;"></iframe>
+  <h2>Moisture Chart – PK Silo</h2>
+  <canvas id="myChart" width="1200" height="650"></canvas>
 
   <script>
-    const channelID = "2793071";  // <-- your channel ID
-    const channelAPIKEY = "BL9H0JXPJEA08H3G"
+    const channelId = "2793071";
     const field = 1;
-    const timezone = "Asia/Jakarta";
+    const apiKey = "BL9H0JXPJEA08H3G";
 
-    let currentDate = new Date();
+    const startDate = new Date("2025-03-15T00:00:00Z");
+    const endDate = new Date("2025-12-31T23:59:59Z");
 
-    function formatDate(date) {
-      return date.toISOString().split("T")[0]; // YYYY-MM-DD
-    }
+    const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&results=8000`;
 
-    function updateChart() {
-      const start = new Date(currentDate);
-      const end = new Date(currentDate);
-      end.setDate(end.getDate() + 1);
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const feeds = data.feeds.filter(entry => {
+          const t = new Date(entry.created_at);
+          return t >= startDate && t <= endDate;
+        });
 
-      const url = `https://thingspeak.com/channels/${channelID}/charts/${field}?&api_key=%{channelAPIJEY}&start=${formatDate(start)}&end=${formatDate(end)}&timezone=${timezone}`;
-      document.getElementById("chart").src = url;
-    }
+        const timestamps = feeds.map(entry => new Date(entry.created_at).toLocaleString());
+        const values = feeds.map(entry => parseFloat(entry[`field${field}`]));
 
-    function shiftDays(days) {
-      currentDate.setDate(currentDate.getDate() + days);
-      updateChart();
-    }
-
-    // Load initial chart
-    updateChart();
+        const ctx = document.getElementById("myChart").getContext("2d");
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: timestamps,
+            datasets: [{
+              label: "Moisture (%)",
+              data: values,
+              borderColor: "#0000FF",
+              backgroundColor: "rgba(0,0,255,0.1)",
+              fill: false,
+              pointRadius: 0.5,
+              borderWidth: 2
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                min: -2,
+                max: 20,
+                title: {
+                  display: true,
+                  text: 'Moisture (%)'
+                }
+              },
+              x: {
+                ticks: {
+                  autoSkip: true,
+                  maxTicksLimit: 20
+                },
+                title: {
+                  display: true,
+                  text: 'Timestamp'
+                }
+              }
+            },
+            plugins: {
+              legend: { display: true },
+              tooltip: { mode: 'index', intersect: false }
+            },
+            responsive: false,
+            maintainAspectRatio: false
+          }
+        });
+      });
   </script>
 </body>
 </html>
