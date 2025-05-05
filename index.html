@@ -13,7 +13,8 @@
   <iframe id="chart" width="700" height="400" style="border: 1px solid #ccc;"></iframe>
 
   <script>
-    const channelID = "123456";  // <-- your channel ID
+    const channelID = "2793071";  // <-- your channel ID
+    const channelAPIKEY = "BL9H0JXPJEA08H3G"
     const field = 1;
     const timezone = "Asia/Jakarta";
 
@@ -28,7 +29,7 @@
       const end = new Date(currentDate);
       end.setDate(end.getDate() + 1);
 
-      const url = `https://thingspeak.com/channels/${channelID}/charts/${field}?dynamic=true&start=${formatDate(start)}&end=${formatDate(end)}&timezone=${timezone}`;
+      const url = `https://thingspeak.com/channels/${channelID}/charts/${field}?&api_key=%{channelAPIJEY}&start=${formatDate(start)}&end=${formatDate(end)}&timezone=${timezone}`;
       document.getElementById("chart").src = url;
     }
 
