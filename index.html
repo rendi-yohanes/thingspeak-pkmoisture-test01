@@ -10,6 +10,9 @@
 </head>
 <body>
   <h2>Moisture Chart – PK Silo</h2>
+  <p style="font-size: 14px; color: gray;">
+  GitHub Version: <strong>2025-05-05 16:08</strong>
+  </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
   <label for="endDateInput" style="margin-left: 20px;">End Date: </label>
@@ -17,7 +20,10 @@
   <button onclick="loadChart()" style="margin-left: 20px;">Load Chart</button>
   <br><br>
   <canvas id="myChart" width="1200" height="650"></canvas>
-
+  <p>
+  Raw ThingSpeak chart URL:<br>
+  <a id="tsLink" href="#" target="_blank" style="color:blue; word-break: break-all;"></a>
+  </p>
   <script>
     const channelId = "2793071";
     const field = 1;
