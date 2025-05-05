@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-05 16:58</strong>
+  GitHub Version: <strong>2025-05-05 17:01</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -78,10 +78,11 @@
               datasets: [{
                 label: "Moisture (%)",
                 data: values,
+                showLine: false,
                 borderColor: "#0000FF",
                 backgroundColor: "rgba(0,0,255,0.1)",
                 fill: false,
-                pointRadius: 0.5,
+                pointRadius: 2,
                 borderWidth: 2
               }]
             },
