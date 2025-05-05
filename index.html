@@ -11,7 +11,7 @@
 <body>
   <h2>Moisture Chart – PK Silo</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-05 16:37</strong>
+  GitHub Version: <strong>2025-05-05 16:44</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -55,7 +55,7 @@
             return t >= startDate && t <= endDate;
           });
     
-          const timestamps = feeds.map(entry => new Date(entry.created_at).toLocaleString());
+          const timestamps = feeds.map(entry => new Date(entry.created_at));
           
           //const values = feeds.map(entry => parseFloat(entry[`field${field}`]));
           const values = feeds.map(entry => {
@@ -90,7 +90,18 @@
                   max: 20
                 },
                 x: {
-                  ticks: { autoSkip: true, maxTicksLimit: 20 }
+                  type: 'time',
+                  time: {
+                    tooltipFormat: 'MMM dd, yyyy HH:mm',
+                    displayFormats: {
+                      hour: 'MMM dd HH:mm',
+                      day: 'MMM dd',
+                    }
+                  },
+                  title: {
+                    display: true,
+                    text: 'Timestamp'
+                  }
                 }
               },
               responsive: false,
