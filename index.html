@@ -11,15 +11,21 @@
 <body>
   <h2>Moisture Chart – PK Silo</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-05 16:27</strong>
+  GitHub Version: <strong>2025-05-05 16:33</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
   <label for="endDateInput" style="margin-left: 20px;">End Date: </label>
   <input type="date" id="endDateInput">
+  <label for="startTimeInput" style="margin-left: 20px;">Start Time:</label>
+  <input type="time" id="startTimeInput" value="00:00:00">
+  <label for="endTimeInput" style="margin-left: 20px;">End Time:</label>
+  <input type="time" id="endTimeInput" value="23:59:59">
+  
   <button onclick="loadChart()" style="margin-left: 20px;">Load Chart</button>
+  
   <br><br>
-  <canvas id="myChart" width="1200" height="650"></canvas>
+  <canvas id="myChart" width="1500" height="650"></canvas>
   <p>
   Raw ThingSpeak chart URL:<br>
   <a id="tsLink" href="#" target="_blank" style="color:blue; word-break: break-all;"></a>
@@ -31,13 +37,14 @@
     let moistureChart = null;
 
     function loadChart() {
-      const startInput = document.getElementById("startDateInput").value;
-      const endInput = document.getElementById("endDateInput").value;
-    
-      const startDate = new Date(startInput + "T00:00:00Z");
-      const endDate = new Date(endInput + "T23:59:59Z");
-    
-      const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&start=${startInput}%2000:00:00&end=${endInput}%2023:59:59`;
+      const startDateInput = document.getElementById("startDateInput").value;
+      const endDateInput = document.getElementById("endDateInput").value;
+      const startTimeInput = document.getElementById("startTimeInput").value || "00:00:00";
+      const endTimeInput = document.getElementById("endTimeInput").value || "23:59:59";
+      
+      const startDate = new Date(`${startDateInput}T${startTimeInput}Z`);
+      const endDate = new Date(`${endDateInput}T${endTimeInput}Z`);
+      const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}`;
     
       fetch(url)
         .then(response => response.json())
@@ -86,7 +93,7 @@
           });
         });
      // Update link to raw ThingSpeak chart
-    const thingSpeakLink = `https://thingspeak.com/channels/${channelId}/charts/${field}?start=${startInput}%2000:00:00&end=${endInput}%2023:59:59&color=0000FF&yaxismin=-2&yaxismax=20`;
+    const thingSpeakLink = `https://thingspeak.com/channels/${channelId}/charts/${field}?start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&color=0000FF&yaxismin=-2&yaxismax=20`;
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
     } // end of function loadChart()
