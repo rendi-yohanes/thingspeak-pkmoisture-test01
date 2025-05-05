@@ -11,7 +11,7 @@
 <body>
   <h2>Moisture Chart – PK Silo</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-05 16:08</strong>
+  GitHub Version: <strong>2025-05-05 16:10</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -97,7 +97,13 @@ window.onload = function() {
   document.getElementById("endDateInput").value = today.toISOString().split('T')[0];
 
   loadChart(); // auto-load on page open
-}    
+}
+
+// Update link to raw ThingSpeak chart
+const thingSpeakLink = `https://thingspeak.com/channels/${channelId}/charts/${field}?start=${startInput}%2000:00:00&end=${endInput}%2023:59:59&color=0000FF&yaxismin=-2&yaxismax=20`;
+document.getElementById("tsLink").href = thingSpeakLink;
+document.getElementById("tsLink").textContent = thingSpeakLink;
+    
 </script>
 </body>
 </html>
