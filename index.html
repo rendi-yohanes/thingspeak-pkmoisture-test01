@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 21:15</strong>
+  GitHub Version: <strong>2025-05-06 21:23</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -141,9 +141,12 @@
     } // end of function loadChart()
     
 function setRange(start, end) {
-  document.getElementById("startDateInput").value = start.toISOString().slice(0, 10);
+  const toDateString = d => 
+    d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+
+  document.getElementById("startDateInput").value = toDateString(start);
   document.getElementById("startTimeInput").value = start.toTimeString().slice(0, 8);
-  document.getElementById("endDateInput").value = end.toISOString().slice(0, 10);
+  document.getElementById("endDateInput").value = toDateString(end);
   document.getElementById("endTimeInput").value = end.toTimeString().slice(0, 8);
 }
     
