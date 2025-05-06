@@ -14,9 +14,9 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 22:56</strong>
+  GitHub Version: <strong>2025-05-06 22:59</strong>
   </p>
-  <label for="startDateInput">Start Date: </label>
+    <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
   <label for="startTimeInput" style="margin-left: 20px;">Start Time:</label>
   <input type="time" id="startTimeInput" value="00:00:00">
@@ -110,13 +110,14 @@
          
           const timestamps = feeds.map(entry => new Date(entry.created_at));
 
+          // Highlight if there's missing data for more than XX hours with annotations
           const gapAnnotations = [];
             for (let i = 1; i < timestamps.length; i++) {
               const prev = timestamps[i - 1];
               const curr = timestamps[i];
               const diffMs = curr - prev;
             
-              if (diffMs > 3600 * 1000) {
+              if (diffMs > 3600 * 6 * 1000) {
                 gapAnnotations.push({
                   type: 'box',
                   xMin: prev.toISOString(),
@@ -138,6 +139,7 @@
           const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms at ${localTime}.`;
           document.getElementById("fetchStats").textContent = statLine;
 
+          // Force chart canvas dimension
           const canvas = document.getElementById("myChart");
           canvas.width = chartConfig.width;
           canvas.height = chartConfig.height;
