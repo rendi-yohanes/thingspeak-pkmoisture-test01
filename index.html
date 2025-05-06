@@ -11,9 +11,9 @@
   </style>
 </head>
 <body>
-  <h2>Moisture Chart – PK Silo</h2>
+  <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 08:35</strong>
+  GitHub Version: <strong>2025-05-06 08:40</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -122,7 +122,7 @@
 window.onload = function() {
   const today = new Date();
   const prior = new Date();
-  prior.setDate(today.getDate() - 3);
+  prior.setDate(today.getDate() - 1);
 
   document.getElementById("startDateInput").value = prior.toISOString().split('T')[0];
   document.getElementById("endDateInput").value = today.toISOString().split('T')[0];
