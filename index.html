@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 08:44</strong>
+  GitHub Version: <strong>2025-05-06 20:37</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -33,6 +33,7 @@
   Raw ThingSpeak chart URL:<br>
   <a id="tsLink" href="#" target="_blank" style="color:blue; word-break: break-all;"></a>
   </p>
+  <p id="fetchStats" style="font-size: 14px; color: darkslategray;"></p>
   <script>
     const channelId = "2793071";
     const field = 1;
@@ -48,15 +49,20 @@
       const startDate = new Date(`${startDateInput}T${startTimeInput}Z`);
       const endDate = new Date(`${endDateInput}T${endTimeInput}Z`);
       const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}`;
-    
+
+      const t0 = performance.now();
       fetch(url)
-        .then(response => response.json())
-        .then(data => {
+        .then(response => response.text())
+        .then(text => {
+          const sizeKB = (new Blob([text]).size / 1024).toFixed(2);
+          const data = JSON.parse(text);
           const feeds = data.feeds.filter(entry => {
             const t = new Date(entry.created_at);
             return t >= startDate && t <= endDate;
           });
-    
+          const t1 = performance.now();
+          const fetchTime = (t1 - t0).toFixed(1);
+         
           const timestamps = feeds.map(entry => new Date(entry.created_at));
           
           //const values = feeds.map(entry => parseFloat(entry[`field${field}`]));
@@ -117,6 +123,12 @@
     const thingSpeakLink = url;
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
+    
+      // Update stats
+    const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms.`;
+    document.getElementById("fetchStats").textContent = statLine;
+
+    
     } // end of function loadChart()
 
 
