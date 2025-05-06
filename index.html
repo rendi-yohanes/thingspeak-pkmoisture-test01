@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 22:26</strong>
+  GitHub Version: <strong>2025-05-06 22:30</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -166,7 +166,7 @@
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
 
-    const thingSpeakLink_Chart = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&width=1200&height=650&color=0000FF&bgcolor=F0F0F0&yaxismin=-2&yaxismax=20&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&dynamic=false&average=1`;
+    const thingSpeakLink_Chart = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&width=1200&height=650&color=0000FF&bgcolor=F0F0F0&yaxismin=-2&yaxismax=20&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&step=true`;
 
     document.getElementById("tsChartLink").href = thingSpeakLink_Chart;
     document.getElementById("tsChartLink").textContent = thingSpeakLink_Chart;
