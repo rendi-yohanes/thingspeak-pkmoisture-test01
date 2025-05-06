@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 20:37</strong>
+  GitHub Version: <strong>2025-05-06 20:45</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -70,6 +70,10 @@
           const val = entry[`field${field}`];
           return val === null || val === "" ? null : parseFloat(val);
           });
+
+          // Update stats
+          const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms.`;
+          document.getElementById("fetchStats").textContent = statLine;
           
           const ctx = document.getElementById("myChart").getContext("2d");
           
@@ -123,12 +127,7 @@
     const thingSpeakLink = url;
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
-    
-      // Update stats
-    const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms.`;
-    document.getElementById("fetchStats").textContent = statLine;
-
-    
+       
     } // end of function loadChart()
 
 
