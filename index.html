@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 21:11</strong>
+  GitHub Version: <strong>2025-05-06 21:15</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -44,6 +44,7 @@
   </p>
   <p id="fetchStats" style="font-size: 14px; color: darkslategray;"></p>
   <script>
+    let hasAutoLoaded = false;
     const channelId = "2793071";
     const field = 1;
     const apiKey = "BL9H0JXPJEA08H3G";
@@ -146,7 +147,9 @@ function setRange(start, end) {
   document.getElementById("endTimeInput").value = end.toTimeString().slice(0, 8);
 }
     
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
+  if (hasAutoLoaded) return; // already handled
+
   const today = new Date();
   const end = new Date(today);
   end.setHours(23, 59, 59, 0);
@@ -156,6 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
   start.setHours(0, 0, 0, 0);
 
   setRange(start, end);
+  hasAutoLoaded = true;
   loadChart();
 })
     
