@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 23:22</strong>
+  GitHub Version: <strong>2025-05-06 23:24</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -74,7 +74,7 @@
       
       const startDate = new Date(`${startDateInput}T${startTimeInput}`);
       const endDate = new Date(`${endDateInput}T${endTimeInput}`);
-      const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&start=${start.toISOString()}&end=${end.toISOString()}`;
+      const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&start=${startDate.toISOString()}&end=${endDate.toISOString()}`;
       
       const t0 = performance.now();
       fetch(url)
