@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 22:30</strong>
+  GitHub Version: <strong>2025-05-06 22:35</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -37,7 +37,7 @@
   <button onclick="moveWindow('forward')">→</button>
   
   <br><br>
-  <canvas id="myChart" width="1500" height="650"></canvas>
+  <canvas id="myChart"></canvas>
   <p>
   ThingSpeak JSON URL:<br>
   <a id="tsLink" href="#" target="_blank" style="color:blue; word-break: break-all;"></a>
@@ -56,6 +56,13 @@
     const field = 1;
     const apiKey = "BL9H0JXPJEA08H3G";
     let moistureChart = null;
+
+    const chartConfig = {
+      width: 1200,
+      height: 650,
+      yMin: -2,
+      yMax: 20
+    };
 
     function loadChart() {
       const startDateInput = document.getElementById("startDateInput").value;
@@ -112,6 +119,10 @@
           const localTime = now.toLocaleString('en-GB'); // or 'id-ID' if you prefer Bahasa-style
           const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms at ${localTime}.`;
           document.getElementById("fetchStats").textContent = statLine;
+
+          const canvas = document.getElementById("myChart");
+          canvas.width = chartConfig.width;
+          canvas.height = chartConfig.height;
           
           const ctx = document.getElementById("myChart").getContext("2d");
           
@@ -138,8 +149,8 @@
             options: {
               scales: {
                 y: {
-                  min: -2,
-                  max: 20
+                  min: chartConfig.yMin,
+                  max: chartConfig.yMax
                 },
                 x: {
                   type: 'time',
@@ -166,8 +177,7 @@
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
 
-    const thingSpeakLink_Chart = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&width=1200&height=650&color=0000FF&bgcolor=F0F0F0&yaxismin=-2&yaxismax=20&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&step=true`;
-
+    const chartUrl = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&width=${chartConfig.width}&height=${chartConfig.height}&color=0000FF&bgcolor=F0F0F0&yaxismin=${chartConfig.yMin}&yaxismax=${chartConfig.yMax}&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&step=true`;
     document.getElementById("tsChartLink").href = thingSpeakLink_Chart;
     document.getElementById("tsChartLink").textContent = thingSpeakLink_Chart;
     
