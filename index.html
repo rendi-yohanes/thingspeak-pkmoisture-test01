@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 22:41</strong>
+  GitHub Version: <strong>2025-05-06 22:47</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -35,6 +35,7 @@
 
   <button onclick="moveWindow('backward')" style="margin-left: 10px;">←</button>
   <button onclick="moveWindow('forward')">→</button>
+  <button onclick="downloadJson()" style="margin-left: 20px;">Download JSON</button>
   
   <br><br>
   <canvas id="myChart"></canvas>
@@ -233,7 +234,30 @@ function moveWindow(direction) {
   loadChart();
 }
 
+function downloadJson() {
+  const startDateInput = document.getElementById("startDateInput").value;
+  const endDateInput = document.getElementById("endDateInput").value;
+  const startTimeInput = document.getElementById("startTimeInput").value || "00:00:00";
+  const endTimeInput = document.getElementById("endTimeInput").value || "23:59:59";
 
+  const url = `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json?api_key=${apiKey}&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}`;
+
+  fetch(url)
+    .then(response => response.text())
+    .then(text => {
+      const blob = new Blob([text], { type: "application/json" });
+      const urlBlob = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const filename = `pk-moisture-${startDateInput}_to_${endDateInput}.json`;
+
+      a.href = urlBlob;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(urlBlob);
+    });
+}
     
 </script>
 </body>
