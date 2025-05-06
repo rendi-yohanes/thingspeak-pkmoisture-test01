@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 22:40</strong>
+  GitHub Version: <strong>2025-05-06 22:41</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -29,8 +29,8 @@
 
   <select id="stepSize" style="margin-left: 20px;">
   <option value="1H">1H</option>
-  <option value="1D" selected>1D</option>
-  <option value="1W">1W</option>
+  <option value="1D">1D</option>
+  <option value="1W" selected>1W</option>
   </select>
 
   <button onclick="moveWindow('backward')" style="margin-left: 10px;">←</button>
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
   end.setHours(23, 59, 59, 0);
 
   const start = new Date(today);
-  start.setDate(start.getDate() - 1);
+  start.setDate(start.getDate() - 7);
   start.setHours(0, 0, 0, 0);
 
   setRange(start, end);
