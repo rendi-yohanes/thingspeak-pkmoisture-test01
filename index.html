@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 23:34</strong>
+  GitHub Version: <strong>2025-05-06 23:46</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -64,7 +64,16 @@
       yMin: -2,
       yMax: 20
     };
+    function formatForThingSpeakChart(dateObj) {
+      return dateObj.getFullYear() + "-" +
+      String(dateObj.getMonth() + 1).padStart(2, '0') + "-" +
+      String(dateObj.getDate()).padStart(2, '0') + " " +
+      String(dateObj.getHours()).padStart(2, '0') + ":" +
+      String(dateObj.getMinutes()).padStart(2, '0') + ":" +
+      String(dateObj.getSeconds()).padStart(2, '0');
+    }
 
+    
     function loadChart() {
       const startDateInput = document.getElementById("startDateInput").value;
       const endDateInput = document.getElementById("endDateInput").value;
@@ -203,7 +212,7 @@
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
 
-    const thingSpeakLink_Chart = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&start=${startDate.toISOString()}&end=${endDate.toISOString()}&width=${chartConfig.width}&height=${chartConfig.height}&color=0000FF&bgcolor=F0F0F0&yaxismin=${chartConfig.yMin}&yaxismax=${chartConfig.yMax}&step=true`;
+    const thingSpeakLink_Chart = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&start=${formatForThingSpeakChart(startDate)}&end=${formatForThingSpeakChart(endDate)}&width=${chartConfig.width}&height=${chartConfig.height}&color=0000FF&bgcolor=F0F0F0&yaxismin=${chartConfig.yMin}&yaxismax=${chartConfig.yMax}&step=true`;
     document.getElementById("tsChartLink").href = thingSpeakLink_Chart;
     document.getElementById("tsChartLink").textContent = thingSpeakLink_Chart;
     
