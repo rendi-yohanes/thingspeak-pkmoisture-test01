@@ -5,6 +5,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
   <style>
     body { font-family: sans-serif; background-color: #f0f0f0; padding: 20px; }
     canvas { background-color: #fff; border: 1px solid #ccc; }
@@ -13,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 22:47</strong>
+  GitHub Version: <strong>2025-05-06 22:54</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -108,8 +109,24 @@
           const fetchTime = (t1 - t0).toFixed(1);
          
           const timestamps = feeds.map(entry => new Date(entry.created_at));
-          
-          //const values = feeds.map(entry => parseFloat(entry[`field${field}`]));
+
+          const gapAnnotations = [];
+            for (let i = 1; i < timestamps.length; i++) {
+              const prev = timestamps[i - 1];
+              const curr = timestamps[i];
+              const diffMs = curr - prev;
+            
+              if (diffMs > 3600 * 1000) {
+                gapAnnotations.push({
+                  type: 'box',
+                  xMin: prev.toISOString(),
+                  xMax: curr.toISOString(),
+                  backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                  borderWidth: 0
+                });
+              }
+            }
+                      
           const values = feeds.map(entry => {
           const val = entry[`field${field}`];
           return val === null || val === "" ? null : parseFloat(val);
@@ -148,6 +165,11 @@
               }]
             },
             options: {
+              plugins: {
+                annotation: {
+                  annotations: gapAnnotations
+                }
+              }
               scales: {
                 y: {
                   min: chartConfig.yMin,
@@ -168,6 +190,8 @@
                   }
                 }
               },
+              
+          
               responsive: false,
               maintainAspectRatio: false
             }
