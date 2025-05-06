@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 20:50</strong>
+  GitHub Version: <strong>2025-05-06 20:56</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -139,16 +139,18 @@
        
     } // end of function loadChart()
 
-
+function setRange(start, end) {
+  document.getElementById("startDateInput").value = start.toISOString().slice(0, 10);
+  document.getElementById("startTimeInput").value = start.toTimeString().slice(0, 8);
+  document.getElementById("endDateInput").value = end.toISOString().slice(0, 10);
+  document.getElementById("endTimeInput").value = end.toTimeString().slice(0, 8);
+}
+    
 window.onload = function() {
-  const today = new Date();
-  const prior = new Date();
-  prior.setDate(today.getDate() - 1);
-
-  document.getElementById("startDateInput").value = prior.toISOString().split('T')[0];
-  document.getElementById("endDateInput").value = today.toISOString().split('T')[0];
-
-  loadChart(); // auto-load on page open
+  const end = new Date();
+  const start = new Date(end.getTime() - 24 * 3600 * 1000); // 1 day back
+  setRange(start, end);
+  loadChart();
 }
 
 function moveWindow(direction) {
@@ -170,10 +172,7 @@ function moveWindow(direction) {
   const newStart = new Date(start.getTime() + deltaMs);
   const newEnd = new Date(end.getTime() + deltaMs);
 
-  document.getElementById("startDateInput").value = newStart.toISOString().slice(0, 10);
-  document.getElementById("startTimeInput").value = newStart.toTimeString().slice(0, 8);
-  document.getElementById("endDateInput").value = newEnd.toISOString().slice(0, 10);
-  document.getElementById("endTimeInput").value = newEnd.toTimeString().slice(0, 8);
+  setRange(newStart, newEnd);
 
   loadChart();
 }
