@@ -177,7 +177,7 @@
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
 
-    const chartUrl = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&width=${chartConfig.width}&height=${chartConfig.height}&color=0000FF&bgcolor=F0F0F0&yaxismin=${chartConfig.yMin}&yaxismax=${chartConfig.yMax}&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&step=true`;
+    const thingSpeakLink_Chart = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&width=${chartConfig.width}&height=${chartConfig.height}&color=0000FF&bgcolor=F0F0F0&yaxismin=${chartConfig.yMin}&yaxismax=${chartConfig.yMax}&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&step=true`;
     document.getElementById("tsChartLink").href = thingSpeakLink_Chart;
     document.getElementById("tsChartLink").textContent = thingSpeakLink_Chart;
     
