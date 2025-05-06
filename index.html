@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 20:56</strong>
+  GitHub Version: <strong>2025-05-06 21:00</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -147,8 +147,14 @@ function setRange(start, end) {
 }
     
 window.onload = function() {
-  const end = new Date();
-  const start = new Date(end.getTime() - 24 * 3600 * 1000); // 1 day back
+  const today = new Date();
+  const end = new Date(today);
+  end.setHours(23, 59, 59, 0); // set to 23:59:59
+
+  const start = new Date(today);
+  start.setDate(start.getDate() - 1);
+  start.setHours(0, 0, 0, 0); // set to 00:00:00
+
   setRange(start, end);
   loadChart();
 }
