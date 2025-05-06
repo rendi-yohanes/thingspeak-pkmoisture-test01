@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 20:45</strong>
+  GitHub Version: <strong>2025-05-06 20:50</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -26,6 +26,15 @@
   <input type="time" id="endTimeInput" value="23:59:59">
   
   <button onclick="loadChart()" style="margin-left: 20px;">Load Chart</button>
+
+  <select id="stepSize" style="margin-left: 20px;">
+  <option value="1H">1H</option>
+  <option value="1D" selected>1D</option>
+  <option value="1W">1W</option>
+  </select>
+
+  <button onclick="moveWindow('backward')" style="margin-left: 10px;">←</button>
+  <button onclick="moveWindow('forward')">→</button>
   
   <br><br>
   <canvas id="myChart" width="1500" height="650"></canvas>
@@ -140,6 +149,33 @@ window.onload = function() {
   document.getElementById("endDateInput").value = today.toISOString().split('T')[0];
 
   loadChart(); // auto-load on page open
+}
+
+function moveWindow(direction) {
+  const startDateInput = document.getElementById("startDateInput").value;
+  const endDateInput = document.getElementById("endDateInput").value;
+  const startTimeInput = document.getElementById("startTimeInput").value;
+  const endTimeInput = document.getElementById("endTimeInput").value;
+
+  const start = new Date(`${startDateInput}T${startTimeInput}`);
+  const end = new Date(`${endDateInput}T${endTimeInput}`);
+  const step = document.getElementById("stepSize").value;
+
+  let deltaMs = 0;
+  if (step === "1H") deltaMs = 3600 * 1000;
+  if (step === "1D") deltaMs = 24 * 3600 * 1000;
+  if (step === "1W") deltaMs = 7 * 24 * 3600 * 1000;
+  if (direction === "backward") deltaMs *= -1;
+
+  const newStart = new Date(start.getTime() + deltaMs);
+  const newEnd = new Date(end.getTime() + deltaMs);
+
+  document.getElementById("startDateInput").value = newStart.toISOString().slice(0, 10);
+  document.getElementById("startTimeInput").value = newStart.toTimeString().slice(0, 8);
+  document.getElementById("endDateInput").value = newEnd.toISOString().slice(0, 10);
+  document.getElementById("endTimeInput").value = newEnd.toTimeString().slice(0, 8);
+
+  loadChart();
 }
 
 
