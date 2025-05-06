@@ -13,7 +13,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 21:30</strong>
+  GitHub Version: <strong>2025-05-06 22:23</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -42,7 +42,14 @@
   Raw ThingSpeak chart URL:<br>
   <a id="tsLink" href="#" target="_blank" style="color:blue; word-break: break-all;"></a>
   </p>
+  <p>
+    ThingSpeak Chart (Stepped View):<br>
+    <a id="tsChartLink" href="#" target="_blank" style="color:green; word-break: break-all;"></a>
+  </p>
+  
+  
   <p id="fetchStats" style="font-size: 14px; color: darkslategray;"></p>
+  
   <script>
     let hasAutoLoaded = false;
     const channelId = "2793071";
@@ -101,7 +108,9 @@
           });
 
           // Update stats
-          const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms.`;
+          const now = new Date();
+          const localTime = now.toLocaleString('en-GB'); // or 'id-ID' if you prefer Bahasa-style
+          const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms at ${localTime}.`;
           document.getElementById("fetchStats").textContent = statLine;
           
           const ctx = document.getElementById("myChart").getContext("2d");
@@ -156,7 +165,12 @@
     const thingSpeakLink = url;
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
-       
+
+    const thingSpeakLink_Chart = `https://api.thingspeak.com/channels/${channelId}/charts/${field}?api_key=${apiKey}&width=1200&height=650&color=0000FF&bgcolor=F0F0F0&yaxismin=-2&yaxismax=20&start=${startDateInput}%20${startTimeInput}&end=${endDateInput}%20${endTimeInput}&dynamic=false&average=1`;
+
+    document.getElementById("tsChartLink").href = chartUrl;
+    document.getElementById("tsChartLink").textContent = chartUrl;
+    
     } // end of function loadChart()
     
 function setRange(start, end) {
