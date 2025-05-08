@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-06 23:46</strong>
+  GitHub Version: <strong>2025-05-08 13:33</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -38,7 +38,21 @@
   <button onclick="moveWindow('forward')">→</button>
   
   <br><br>
-  <canvas id="myChart"></canvas>
+  
+  <div style="display: flex; align-items: flex-start;">
+    <canvas id="myChart" width="1500" height="650"></canvas>
+  
+    <div id="lastValueBox" style="margin-left: 20px; text-align: center;">
+      <div id="lastValueDisplay" style="font-size: 36px; color: blue;">--</div>
+      <div id="lastValueTime" style="font-size: 14px; color: gray;">--</div>
+    </div>
+  </div>
+  
+  <div id="lastValueBox" style="float:right; text-align:center; margin-left:20px;">
+  <div id="lastValueDisplay" style="font-size:36px; color:blue;">--</div>
+  <div id="lastValueTime" style="font-size:14px; color:gray;">--</div>
+  </div>
+  
   <p>
   ThingSpeak JSON URL:<br>
   <a id="tsLink" href="#" target="_blank" style="color:blue; word-break: break-all; font-size: 12px;"></a>
@@ -47,8 +61,6 @@
     ThingSpeak Chart URL:<br>
     <a id="tsChartLink" href="#" target="_blank" style="color:green; word-break: break-all; font-size: 12px;"></a>
   </p>
-  
-  
   <p id="fetchStats" style="font-size: 14px; color: darkslategray;"></p>
   
   <script>
@@ -141,6 +153,23 @@
           return val === null || val === "" ? null : parseFloat(val);
           });
 
+          // Show Last Valid Value
+          const now = new Date();
+          if (startDate <= now && endDate >= now) {
+            const lastValid = [...feeds].reverse().find(f => {
+              const v = f[`field${field}`];
+              return v !== null && v !== "" && !isNaN(v);
+            });
+          
+            if (lastValid) {
+              const displayValue = parseFloat(lastValid[`field${field}`]).toFixed(2);
+              const displayTime = new Date(lastValid.created_at).toLocaleString('en-GB');
+          
+              document.getElementById("lastValueDisplay").textContent = displayValue;
+              document.getElementById("lastValueTime").textContent = displayTime;
+            }
+          }
+          
           // Update stats
           const now = new Date();
           const localTime = now.toLocaleString('en-GB'); // or 'id-ID' if you prefer Bahasa-style
