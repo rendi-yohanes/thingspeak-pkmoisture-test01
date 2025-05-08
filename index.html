@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-08 13:33</strong>
+  GitHub Version: <strong>2025-05-08 13:35</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -171,7 +171,6 @@
           }
           
           // Update stats
-          const now = new Date();
           const localTime = now.toLocaleString('en-GB'); // or 'id-ID' if you prefer Bahasa-style
           const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms at ${localTime}.`;
           document.getElementById("fetchStats").textContent = statLine;
