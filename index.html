@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-08 13:46</strong>
+  GitHub Version: <strong>2025-05-08 13:47</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -28,6 +28,8 @@
   
   <button onclick="loadChart()" style="margin-left: 20px;">Load Chart</button>
 
+  <br><br>
+
   <select id="stepSize" style="margin-left: 20px;">
   <option value="1H">1H</option>
   <option value="1D">1D</option>
@@ -37,8 +39,6 @@
   <button onclick="moveWindow('backward')" style="margin-left: 10px;">←</button>
   <button onclick="moveWindow('forward')">→</button>
   
-  <br><br>
-
   <label>Y-Min:</label>
   <input id="yMinInput" type="number" value="-2" style="width:60px;">
   <label style="margin-left:10px;">Y-Max:</label>
