@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-08 16:53</strong>
+  GitHub Version: <strong>2025-05-08 16:58</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -54,13 +54,14 @@
   
     <div id="lastValueBox" style="margin-left: 20px; text-align: center;">
       <div style="font-size: 16px; color: black;">Last Valid Value</div>
-      <div id="lastValueDisplay" style="font-size: 36px; color: blue;">--</div>
+      <div id="lastValueDisplay" style="font-size: 30px; color: blue;">--</div>
       <div id="lastValueTime" style="font-size: 14px; color: gray;">--</div>
 
-      <div style="font-size: 16px; color: black; margin-top: 20px;">Data Fetch Stats</div>
-      <div id="fetchCount" style="font-size: 36px; color: blue;">--</div>
-      <div id="fetchSize" style="font-size: 36px; color: blue;">--</div>
-      <div id="fetchTime" style="font-size: 14px; color: gray;">--</div>
+      <div style="font-size: 16px; color: black; margin-top: 30px;">Data Fetch Stats</div>
+      <div id="fetchCount" style="font-size: 30px; color: blue;">--</div>
+      <div id="fetchSize" style="font-size: 30px; color: blue;">--</div>
+      <div id="fetchDuration" style="font-size: 30px; color: blue;">--</div>
+      <div id="fetchime" style="font-size: 14px; color: gray;">--</div>
     </div>
   </div>
   
@@ -137,7 +138,7 @@
           }
                     
           const t1 = performance.now();
-          const fetchTime = (t1 - t0).toFixed(1);
+          const fetchDuration = (t1 - t0).toFixed(1);
          
           const timestamps = feeds.map(entry => new Date(entry.created_at));
 
@@ -182,10 +183,11 @@
           }
           
           // Update stats
-          const localTime = now.toLocaleString('en-GB'); // or 'id-ID' if you prefer Bahasa-style
-          const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchTime} ms at ${localTime}.`;
+          const fetchTime = now.toLocaleString('en-GB'); // or 'id-ID' if you prefer Bahasa-style
+          //const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchDuration} ms at ${localTime}.`;
           document.getElementById("fetchCount").textContent = feeds.length;
           document.getElementById("fetchSize").textContent = `${sizeKB} KB`;
+          document.getElementById("fetchDuration").textContent = `${fetchDuration} ms`;
           document.getElementById("fetchTime").textContent = `${fetchTime} ms`;
    
           // Force chart canvas dimension
