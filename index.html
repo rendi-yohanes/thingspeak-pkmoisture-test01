@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-09 11:07</strong>
+  GitHub Version: <strong>2025-05-09 11:10</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -60,7 +60,8 @@
       <div style="margin-top: 30px; font-size: 16px; color: black; font-weight: bold; text-align: left;">Data Statistics</div>
       <div id="statMin" style="font-size: 16px;text-align: left;">Min: --</div>
       <div id="statMax" style="font-size: 16px;text-align: left;">Max: --</div>
-      <div id="statAvg" style="font-size: 16px;text-align: left;">Mean: --</div>
+      <div id="statMean" style="font-size: 16px;text-align: left;">Mean: --</div>
+      <div id="statMedian" style="font-size: 16px;text-align: left;">Median: --</div>
       <div id="statStd" style="font-size: 16px;text-align: left;">Std Dev: --</div>
         
       <div style="font-size: 16px; color: black; margin-top: 30px; font-weight: bold; text-align: left;">Data Fetch</div>
@@ -194,15 +195,17 @@
             const mean = sum / validValues.length;
             const variance = validValues.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / validValues.length;
             const stdDev = Math.sqrt(variance);
+            const median = calculateMedian(validValues).toFixed(2) : "--";
           
             min = Math.min(...validValues).toFixed(2);
             max = Math.max(...validValues).toFixed(2);
-            avg = mean.toFixed(2);
+            mean = mean.toFixed(2);
             std = stdDev.toFixed(2);
           }
           document.getElementById("statMin").textContent = `Min: ${min}`;
           document.getElementById("statMax").textContent = `Max: ${max}`;
-          document.getElementById("statAvg").textContent = `Avg: ${avg}`;
+          document.getElementById("statMean").textContent = `Avg: ${mean}`;
+          document.getElementById("statMedian").textContent = `Median: ${median}`;
           document.getElementById("statStd").textContent = `Std Dev: ${std}`;
           
           // Data Fetch Statistics
@@ -346,6 +349,14 @@ function updateYAxis() {
   moistureChart.options.scales.y.max = yMax;
   moistureChart.update();
 }    
+
+function calculateMedian(arr) {
+  const sorted = [...arr].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0
+    ? (sorted[mid - 1] + sorted[mid]) / 2
+    : sorted[mid];
+}
     
 </script>
 </body>
