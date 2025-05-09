@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-09 11:18</strong>
+  GitHub Version: <strong>2025-05-09 11:20</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -189,18 +189,19 @@
 
           // Data Statistics
           const validValues = values.filter(v => v !== null && !isNaN(v));
-          let min = "--", max = "--", avg = "--", std = "--";
+          let min = "--", max = "--", avg = "--", std = "--", median = '--';
           if (validValues.length > 0) {
             const sum = validValues.reduce((a, b) => a + b, 0);
             const mean_raw = sum / validValues.length;
             const variance = validValues.reduce((a, b) => a + Math.pow(b - mean_raw, 2), 0) / validValues.length;
             const stdDev = Math.sqrt(variance);
-            const median = calculateMedian(validValues).toFixed(2);
+            const median_raw = calculateMedian(validValues);
           
             min = Math.min(...validValues).toFixed(2);
             max = Math.max(...validValues).toFixed(2);
             mean = mean_raw.toFixed(2);
             std = stdDev.toFixed(2);
+            median = median_raw.toFixed(2);
           }
           document.getElementById("statMin").textContent = `Min: ${min}`;
           document.getElementById("statMax").textContent = `Max: ${max}`;
