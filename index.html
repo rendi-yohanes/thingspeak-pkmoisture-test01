@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-09 09:34</strong>
+  GitHub Version: <strong>2025-05-09 11:06</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -51,12 +51,19 @@
   
   <div style="display: flex; align-items: flex-start;">
     <canvas id="myChart" width="1500" height="650"></canvas>
-  
+
       <div id="lastValueBox" style="margin-left: 20px; text-align: left;">
       <div style="font-size: 16px; color: black; font-weight: bold; text-align: left;">Last Valid Value</div>
       <div id="lastValueDisplay" style="font-size: 14px; color: black; text-align: left;">--</div>
       <div id="lastValueTime" style="font-size: 14px; color: black; text-align: left;">--</div>
-      <div style="font-size: 16px; color: black; margin-top: 30px; font-weight: bold; text-align: left;">Data Fetch Stats</div>
+      
+      <div style="margin-top: 30px; font-size: 16px; color: black; font-weight: bold; text-align: left;">Data Statistics</div>
+      <div id="statMin" style="font-size: 16px;text-align: left;">Min: --</div>
+      <div id="statMax" style="font-size: 16px;text-align: left;">Max: --</div>
+      <div id="statAvg" style="font-size: 16px;text-align: left;">Mean: --</div>
+      <div id="statStd" style="font-size: 16px;text-align: left;">Std Dev: --</div>
+        
+      <div style="font-size: 16px; color: black; margin-top: 30px; font-weight: bold; text-align: left;">Data Fetch</div>
       <div id="fetchCount" style="font-size: 14px; color: black; text-align: left;">--</div>
       <div id="fetchSize" style="font-size: 14px; color: black; text-align: left;">--</div>
       <div id="fetchDuration" style="font-size: 14px; color: black; text-align: left;">--</div>
@@ -135,11 +142,8 @@
               [`field${field}`]: null
             });
           }
-                    
-          const t1 = performance.now();
-          const fetchDuration = (t1 - t0).toFixed(1);
-         
-          const timestamps = feeds.map(entry => new Date(entry.created_at));
+
+
 
           // Highlight if there's missing data for more than XX hours with annotations
           const gapAnnotations = [];
@@ -180,10 +184,31 @@
               document.getElementById("lastValueTime").textContent = "Timestamp: " + displayTime;
             }
           }
+
+          // Data Statistics
+          const validValues = values.filter(v => v !== null && !isNaN(v));
+          let min = "--", max = "--", avg = "--", std = "--";
+          if (validValues.length > 0) {
+            const sum = validValues.reduce((a, b) => a + b, 0);
+            const mean = sum / validValues.length;
+            const variance = validValues.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / validValues.length;
+            const stdDev = Math.sqrt(variance);
           
-          // Update stats
-          const fetchTime = now.toLocaleString('en-GB'); // or 'id-ID' if you prefer Bahasa-style
-          //const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchDuration} ms at ${localTime}.`;
+            min = Math.min(...validValues).toFixed(2);
+            max = Math.max(...validValues).toFixed(2);
+            avg = mean.toFixed(2);
+            std = stdDev.toFixed(2);
+          }
+          document.getElementById("statMin").textContent = `Min: ${min}`;
+          document.getElementById("statMax").textContent = `Max: ${max}`;
+          document.getElementById("statAvg").textContent = `Avg: ${avg}`;
+          document.getElementById("statStd").textContent = `Std Dev: ${std}`;
+          
+          // Data Fetch Statistics
+          const t1 = performance.now();
+          const fetchDuration = (t1 - t0).toFixed(1);
+          const timestamps = feeds.map(entry => new Date(entry.created_at));
+          const fetchTime = now.toLocaleString('en-GB'); 
           const fetchdataPointCount = feeds.length > 2 ? feeds.length - 2 : 0;
           document.getElementById("fetchCount").textContent = `Data points: ${fetchdataPointCount}`;
           document.getElementById("fetchSize").textContent = `Size: ${sizeKB} KB`;
@@ -251,7 +276,8 @@
             }
           });
         });
-     // Update link to raw ThingSpeak chart
+     
+    // Update link to raw ThingSpeak chart
     const thingSpeakLink = url;
     document.getElementById("tsLink").href = thingSpeakLink;
     document.getElementById("tsLink").textContent = thingSpeakLink;
