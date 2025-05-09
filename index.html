@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-09 11:06</strong>
+  GitHub Version: <strong>2025-05-09 11:07</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -124,7 +124,8 @@
             const t = new Date(entry.created_at);
             return t >= startDate && t <= endDate;
           });
-         
+          const timestamps = feeds.map(entry => new Date(entry.created_at));
+          
           // Ensure chart includes points at exact start and end even if data is missing
           const inputStart = new Date(`${startDateInput}T${startTimeInput}`);
           const inputEnd = new Date(`${endDateInput}T${endTimeInput}`);
@@ -207,7 +208,6 @@
           // Data Fetch Statistics
           const t1 = performance.now();
           const fetchDuration = (t1 - t0).toFixed(1);
-          const timestamps = feeds.map(entry => new Date(entry.created_at));
           const fetchTime = now.toLocaleString('en-GB'); 
           const fetchdataPointCount = feeds.length > 2 ? feeds.length - 2 : 0;
           document.getElementById("fetchCount").textContent = `Data points: ${fetchdataPointCount}`;
