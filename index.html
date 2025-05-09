@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-08 17:06</strong>
+  GitHub Version: <strong>2025-05-09 09:22</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -52,16 +52,15 @@
   <div style="display: flex; align-items: flex-start;">
     <canvas id="myChart" width="1500" height="650"></canvas>
   
-    <div id="lastValueBox" style="margin-left: 20px; text-align: center;">
-      <div style="font-size: 16px; color: black;">Last Valid Value</div>
-      <div id="lastValueDisplay" style="font-size: 30px; color: blue;">--</div>
-      <div id="lastValueTime" style="font-size: 14px; color: gray;">--</div>
-
-      <div style="font-size: 16px; color: black; margin-top: 30px;">Data Fetch Stats</div>
-      <div id="fetchCount" style="font-size: 30px; color: blue;">--</div>
-      <div id="fetchSize" style="font-size: 30px; color: blue;">--</div>
-      <div id="fetchDuration" style="font-size: 30px; color: blue;">--</div>
-      <div id="fetchTime" style="font-size: 14px; color: gray;">--</div>
+      <div id="lastValueBox" style="margin-left: 20px; text-align: left;">
+      <div style="font-size: 16px; color: black; font-weight: bold; text-align: left;">Last Valid Value</div>
+      <div id="lastValueDisplay" style="font-size: 14px; color: black; text-align: left;">--</div>
+      <div id="lastValueTime" style="font-size: 14px; color: black; text-align: left;">--</div>
+      <div style="font-size: 16px; color: black; margin-top: 30px; font-weight: bold; text-align: left;">Data Fetch Stats</div>
+      <div id="fetchCount" style="font-size: 14px; color: black; text-align: left;">--</div>
+      <div id="fetchSize" style="font-size: 14px; color: black; text-align: left;">--</div>
+      <div id="fetchDuration" style="font-size: 14px; color: black; text-align: left;">--</div>
+      <div id="fetchTime" style="font-size: 14px; color: black; text-align: left;">--</div>
     </div>
   </div>
   
@@ -177,18 +176,18 @@
               const displayValue = parseFloat(lastValid[`field${field}`]).toFixed(2);
               const displayTime = new Date(lastValid.created_at).toLocaleString('en-GB');
           
-              document.getElementById("lastValueDisplay").textContent = displayValue + "%";
-              document.getElementById("lastValueTime").textContent = displayTime;
+              document.getElementById("lastValueDisplay").textContent = "Value: " + displayValue + "%";
+              document.getElementById("lastValueTime").textContent = "Timestamp: " + displayTime;
             }
           }
           
           // Update stats
           const fetchTime = now.toLocaleString('en-GB'); // or 'id-ID' if you prefer Bahasa-style
           //const statLine = `Fetched ${feeds.length} points, ~${sizeKB} KB, in ${fetchDuration} ms at ${localTime}.`;
-          document.getElementById("fetchCount").textContent = feeds.length - 2;
-          document.getElementById("fetchSize").textContent = `${sizeKB} KB`;
-          document.getElementById("fetchDuration").textContent = `${fetchDuration} ms`;
-          document.getElementById("fetchTime").textContent = `${fetchTime}`;
+          document.getElementById("fetchCount").textContent = "Data points: " + feeds.length - 2;
+          document.getElementById("fetchSize").textContent = `"Size: " + ${sizeKB} KB`;
+          document.getElementById("fetchDuration").textContent = "Duration :" + `${fetchDuration} ms`;
+          document.getElementById("fetchTime").textContent = "Fetched at: " + `${fetchTime}`;
    
           // Force chart canvas dimension
           const canvas = document.getElementById("myChart");
