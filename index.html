@@ -14,7 +14,7 @@
 <body>
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-09 09:29</strong>
+  GitHub Version: <strong>2025-05-09 09:34</strong>
   </p>
     <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -206,7 +206,7 @@
             data: {
               labels: timestamps,
               datasets: [{
-                label: "Moisture (%)",
+                label: "Moisture Chart - PK Silo",
                 data: values,
                 stepped: true,
                 borderColor: "black",         // thin black line
@@ -226,8 +226,9 @@
               scales: {
                 y: {
                   min: chartConfig.yMin,
-                  max: chartConfig.yMax
-                },
+                  max: chartConfig.yMax,
+                  title: { display: true, text: "Moisture (%)", font: {size: 14}}
+                    },
                 x: {
                   type: 'time',
                   time: {
