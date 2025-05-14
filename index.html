@@ -7,6 +7,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
   <style>
     body { font-family: sans-serif; background-color: #f0f0f0; padding: 20px; }
     canvas { background-color: #fff; border: 1px solid #ccc; }
@@ -32,7 +33,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 16:26</strong>
+  GitHub Version: <strong>2025-05-14 16:39</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -64,7 +65,8 @@
   <input id="yMinInput" type="number" value="-2" onchange="updateYAxis()" style="width:60px;">
   <label style="margin-left:10px;">Y-Max:</label>
   <input id="yMaxInput" type="number" value="20" onchange="updateYAxis()" style="width:60px;">
-
+  <button onclick="moistureChart.resetZoom()">Reset Zoom</button>
+  
   <br><br>
   
   <div id="chartContainer" style="display: flex; align-items: flex-start;">
@@ -286,9 +288,21 @@
             },
             options: {
               plugins: {
-                annotation: {
-                  annotations: gapAnnotations
-                }
+                annotation: { annotations: gapAnnotations }, 
+                    zoom: {
+                    zoom: {
+                      wheel: { enabled: true, // Enable zoom with mouse wheel
+                      },
+                      pinch: {
+                        enabled: true // Enable zoom on touch devices
+                      },
+                      mode: 'x', // Zoom only on the X-axis (time)
+                    },
+                    pan: {
+                      enabled: true,
+                      mode: 'x', // Pan along X-axis
+                    }
+                  }            
               },
               scales: {
                 y: {
