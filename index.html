@@ -13,17 +13,16 @@
   </style>
 </head>
 <body>
-
-<!-- Simple password protection -->
+  
 <script>
     const now = new Date();
-    const expectedPassword = now.getFullYear() + (now.getMonth() + 1) + now.getDate(); 
+    const chal = now.getFullYear() + (now.getMonth() + 1) + now.getDate(); 
     let input = null;
   
     while (true) {
-      input = prompt("Enter password: ");
-      if (input === null || parseInt(input) !== expectedPassword) {
-        alert("!!!");
+      input = prompt("");
+      if (input === null || parseInt(input) !== chal) {
+        alert("");
     }
       else{
         break;
@@ -33,7 +32,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 16:21</strong>
+  GitHub Version: <strong>2025-05-14 16:25</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -198,7 +197,7 @@
               const durMs = end - start;
               const durH = Math.floor(durMs / 3600000);
               const durM = Math.floor((durMs % 3600000) / 60000);
-              const duration = `${durH}h ${durM}m`;
+              const duration = `${durH} hours ${durM} minutes`;
             
               const gapText = `• ${start.toLocaleString()} → ${end.toLocaleString()} (${duration})`;
               gapListElement.innerHTML += gapText + "<br>";
