@@ -12,22 +12,23 @@
   </style>
 </head>
 <body>
+
+<!-- Simple password protection -->
 <script>
     const now = new Date();
-    const expectedPassword = now.getFullYear() + (now.getMonth() + 1) + now.getDate(); // e.g. 2025+5+9 = 2039
+    const expectedPassword = now.getFullYear() + (now.getMonth() + 1) + now.getDate(); 
     const input = prompt("Enter password:");
 
     if (input === null || parseInt(input) !== expectedPassword) {
-      //document.body.innerHTML = "<h1 style='color: red; text-align: center;'>Access Denied</h1>";
+      document.body.innerHTML = "<h2 style='text-align:center;'>:X.<br>Reloading...</h2>";
       //throw new Error(":X"); // prevent further JS execution
-      location.reload();
-    
+      setTimeout(() => { location.reload();}, 2000); 
     }
   </script>
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 15:30</strong>
+  GitHub Version: <strong>2025-05-14 15:34</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
