@@ -33,7 +33,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 16:15</strong>
+  GitHub Version: <strong>2025-05-14 16:21</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -193,12 +193,14 @@
             const gapListElement = document.getElementById("gapList");
             gapListElement.innerHTML = "<b>Missing Data Gaps:</b><br>";
             gapAnnotations.forEach(gap => {
-              const durMs = gap.end - gap.start;
+              const start = new Date(gap.xMin);
+              const end = new Date(gap.xMax);
+              const durMs = end - start;
               const durH = Math.floor(durMs / 3600000);
               const durM = Math.floor((durMs % 3600000) / 60000);
               const duration = `${durH}h ${durM}m`;
             
-              const gapText = `• ${gap.start.toLocaleString()} → ${gap.end.toLocaleString()} (${duration})`;
+              const gapText = `• ${start.toLocaleString()} → ${end.toLocaleString()} (${duration})`;
               gapListElement.innerHTML += gapText + "<br>";
             });          
     
