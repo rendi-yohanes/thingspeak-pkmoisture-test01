@@ -270,6 +270,8 @@
             moistureChart.destroy();
           }
           
+          Chart.register(window['chartjs-plugin-zoom']);
+          
           moistureChart = new Chart(ctx, {
             type: 'line',
             data: {
