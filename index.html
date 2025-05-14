@@ -18,16 +18,18 @@
     const input = prompt("Enter password:");
 
     if (input === null || parseInt(input) !== expectedPassword) {
-      document.body.innerHTML = "<h1 style='color: red; text-align: center;'>Access Denied</h1>";
-      throw new Error(":X"); // prevent further JS execution
+      //document.body.innerHTML = "<h1 style='color: red; text-align: center;'>Access Denied</h1>";
+      //throw new Error(":X"); // prevent further JS execution
+      location.reload();
+    
     }
   </script>
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 15:19</strong>
+  GitHub Version: <strong>2025-05-14 15:30</strong>
   </p>
-    <label for="startDateInput">Start Date: </label>
+  <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
   <label for="startTimeInput" style="margin-left: 20px;">Start Time:</label>
   <input type="time" id="startTimeInput" value="00:00:00" lang="en-GB" step="1">
@@ -106,6 +108,7 @@
       yMin: -2,
       yMax: 20
     };
+    
     function formatForThingSpeakChart(dateObj) {
       return dateObj.getFullYear() + "-" +
       String(dateObj.getMonth() + 1).padStart(2, '0') + "-" +
@@ -313,7 +316,7 @@ function setRange(start, end) {
   document.getElementById("endTimeInput").value = end.toTimeString().slice(0, 8);
 }
     
-document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
   if (hasAutoLoaded) return; // already handled
 
   const today = new Date();
