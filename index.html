@@ -33,7 +33,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 16:03</strong>
+  GitHub Version: <strong>2025-05-14 16:04</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -386,7 +386,7 @@ function saveChartImage() {
     const now = new Date ();
     const pad = (n) => String(n).padStart(2, "0");
     const datePart = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}`;
-    const timePart = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    const timePart = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
     
     const link = document.createElement("a");
     
