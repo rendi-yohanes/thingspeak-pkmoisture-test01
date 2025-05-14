@@ -32,7 +32,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 16:25</strong>
+  GitHub Version: <strong>2025-05-14 16:26</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -177,7 +177,7 @@
               const curr = timestamps[i];
               const diffMs = curr - prev;
             
-              if (diffMs > 3600 * 6 * 1000) { //3600 * X * 1000 --> X = hours
+              if (diffMs > 3600 * 2 * 1000) { //3600 * X * 1000 --> X = hours
                 gapAnnotations.push({
                   type: 'box',
                   xMin: prev.toISOString(),
