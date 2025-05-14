@@ -6,6 +6,7 @@
   <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
     body { font-family: sans-serif; background-color: #f0f0f0; padding: 20px; }
     canvas { background-color: #fff; border: 1px solid #ccc; }
@@ -32,7 +33,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 15:46</strong>
+  GitHub Version: <strong>2025-05-14 15:55</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -67,8 +68,8 @@
 
   <br><br>
   
-  <div style="display: flex; align-items: flex-start;">
-    <canvas id="myChart" width="1500" height="650"></canvas>
+  <div id="chartContainer" style="display: flex; align-items: flex-start;">
+      <canvas id="myChart" width="1500" height="650"></canvas>
 
       <div id="lastValueBox" style="margin-left: 20px; text-align: left;">
       <div style="font-size: 16px; color: black; font-weight: bold; text-align: left;">Last Valid Value</div>
@@ -99,6 +100,8 @@
     <a id="tsChartLink" href="#" target="_blank" style="color:green; word-break: break-all; font-size: 12px;"></a>
   </p>
   <p id="fetchStats" style="font-size: 14px; color: darkslategray;"></p>
+  
+  <button onclick="saveChartImage()">Save As Image</button>
   
   <script>
     let hasAutoLoaded = false;
@@ -377,6 +380,16 @@ function calculateMedian(arr) {
     ? (sorted[mid - 1] + sorted[mid]) / 2
     : sorted[mid];
 }
+
+function saveChartImage() {
+  html2canvas(document.getElementById("chartContainer")).then(canvas => {
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = "full_chart_view.png";
+    link.click();
+  });
+}
+    
     
 </script>
 </body>
