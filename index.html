@@ -39,7 +39,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 16:58</strong>
+  GitHub Version: <strong>2025-05-14 17:03</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -299,16 +299,18 @@
                 annotation: { annotations: gapAnnotations }, 
                     zoom: {
                     zoom: {
-                      wheel: { enabled: true, // Enable zoom with mouse wheel
+                      wheel: { enabled: false, // Enable zoom with mouse wheel
                       },
                       pinch: {
-                        enabled: true // Enable zoom on touch devices
+                        enabled: false // Enable zoom on touch devices
                       },
                       mode: 'x', // Zoom only on the X-axis (time)
                     },
                     pan: {
                       enabled: true,
-                      mode: 'x', // Pan along X-axis
+                      mode: 'x',
+                      speed: 20,
+                      threshold: 10// Pan along X-axis
                     }
                   }            
               },
