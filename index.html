@@ -3,17 +3,13 @@
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <title>ThingSpeak Chart.js Viewer</title>
+  
   <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>  
-  
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
-
-
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
-
-  
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
@@ -21,9 +17,17 @@
     canvas { background-color: #fff; border: 1px solid #ccc; pointer-events: auto; touch-action: auto; }
     button { padding: 6px 12px; margin: 4px; font-size: 13px; background-color: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; }
     button:hover {background-color: #1565c0;}
-    #chartContainer {display: flex; align-items: flex-start; pointer-events: auto;}   /* ✅ Ensure container allows pointer events */  
+    #headerWrapper {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); max-width: 100%; margin-bottom: 20px;}
+    #chartContainer {display: flex; align-items: flex-start; pointer-events: auto;}   
   </style>
 </head>
+
+
+
+
+
+
+  
 <body>
   
 <script>
@@ -41,11 +45,12 @@
       }
     }
   </script>
-  
-  <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
-  <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-15 14:08</strong>
-  </p>
+
+  <div id="headerWrapper">
+    <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
+    <p style="font-size: 14px; color: gray; margin-top:5px">GitHub Version: <strong>2025-05-15 14:25</strong> </p>
+  </div>
+    
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
   <label for="startTimeInput" style="margin-left: 20px;">Start Time:</label>
@@ -75,7 +80,6 @@
   
   <div id="chartContainer" style="display: flex; align-items: flex-start;">
       <canvas id="myChart" width="1500" height="650"></canvas>
-
 
       <button id="sideWrapperToggle" onclick="sideWrapperToggle_fn()" style="font-size: 12px;">[+]</button>    
       <div id="sideWrapper" style="margin-left: 20px; text-align: left; display:none;">
@@ -111,10 +115,6 @@
     <div id="gapList" style="font-size: 14px; margin-top: 20px;"></div>
   </div>
 
-
-
-
-  
   <script>
     let hasAutoLoaded = false;
     const channelId = "2793071";
@@ -314,28 +314,13 @@
                   }            
               },
               scales: {
-                y: {
-                  min: chartConfig.yMin,
-                  max: chartConfig.yMax,
-                  title: { display: true, text: "Moisture (%)", font: {size: 14}}
-                    },
+                y: {min: chartConfig.yMin, max: chartConfig.yMax, title: { display: true, text: "Moisture (%)", font: {size: 14}}},
                 x: {
-                  type: 'time',
-                  time: {
-                    tooltipFormat: 'MMM dd, yyyy HH:mm',
-                    displayFormats: {
-                      hour: 'MMM dd HH:mm',
-                      day: 'MMM dd',
-                    }
-                  },
-                  title: {
-                    display: true,
-                    text: 'Timestamp'
-                  }
+                    type: 'time', 
+                    time: {tooltipFormat: 'MMM dd, yyyy HH:mm', displayFormats: { hour: 'MMM dd HH:mm', day: 'MMM dd',}}, 
+                    title: {display: true,text: 'Timestamp'}
                 }
               },
-              
-          
               responsive: false,
               maintainAspectRatio: false
             }
