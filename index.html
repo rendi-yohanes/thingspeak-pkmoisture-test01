@@ -47,7 +47,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-15 13:57</strong>
+  GitHub Version: <strong>2025-05-15 14:05</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -125,12 +125,7 @@
     const apiKey = "BL9H0JXPJEA08H3G";
     let moistureChart = null;
 
-    const chartConfig = {
-      width: 1500,
-      height: 650,
-      yMin: -2,
-      yMax: 20
-    };
+    const chartConfig = {width: 1500, height: 650, yMin: -2, yMax: 20};
     
     function formatForThingSpeakChart(dateObj) {
       return dateObj.getFullYear() + "-" +
