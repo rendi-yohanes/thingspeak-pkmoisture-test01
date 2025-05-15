@@ -53,7 +53,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 16:16</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 16:21</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -116,7 +116,9 @@
     <p>ThingSpeak Chart URL: <a id="tsChartLink" href="#" target="_blank" style="color:green; word-break: break-all; font-size: 12px;"></a> </p>
     <p id="fetchStats" style="font-size: 14px; color: darkslategray;"></p>
     <button onclick="saveChartImage()">Save As Image</button>
-    <div id="gapList" style="font-size: 14px; margin-top: 20px;"></div>
+    
+    <div class="group1-title">Missing Data Gaps:</div> 
+    <div id="gapList" class="group1-text"></div>
   </div>
 
   <script>
@@ -200,7 +202,7 @@
 
             // Summary of gaps timing
             const gapListElement = document.getElementById("gapList");
-            gapListElement.innerHTML = "<b>Missing Data Gaps:</b><br>";
+            gapListElement.innerHTML = "";
             gapAnnotations.forEach(gap => {
               const start = new Date(gap.xMin);
               const end = new Date(gap.xMax);
