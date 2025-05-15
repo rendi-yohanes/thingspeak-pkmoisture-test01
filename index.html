@@ -39,7 +39,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-14 17:05</strong>
+  GitHub Version: <strong>2025-05-15 08:11</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -97,21 +97,16 @@
       <div id="fetchTime" style="font-size: 14px; color: black; text-align: left;">--</div>
     </div>
   </div>
-  
-  <p>
-  ThingSpeak JSON URL:<br>
-  <a id="tsLink" href="#" target="_blank" style="color:blue; word-break: break-all; font-size: 12px;"></a>
-  </p>
-  <p>
-    ThingSpeak Chart URL:<br>
-    <a id="tsChartLink" href="#" target="_blank" style="color:green; word-break: break-all; font-size: 12px;"></a>
-  </p>
-  <p id="fetchStats" style="font-size: 14px; color: darkslategray;"></p>
-  
-  <button onclick="saveChartImage()">Save As Image</button>
 
-  <div id="gapList" style="font-size: 14px; margin-top: 20px;"></div>
-  
+  <button id="bottomWrapperToggle" onclick="bottomWrapperToggle_fn()" style="font-size: 12px;">[ + ]</button>
+  <div id="bottomWrapper" style="display: none; margin-top: 10px;">
+    <p> ThingSpeak JSON URL:<br> <a id="tsLink" href="#" target="_blank" style="color:blue; word-break: break-all; font-size: 12px;"></a></p>
+    <p>ThingSpeak Chart URL:<br> <a id="tsChartLink" href="#" target="_blank" style="color:green; word-break: break-all; font-size: 12px;"></a> </p>
+    <p id="fetchStats" style="font-size: 14px; color: darkslategray;"></p>
+    <button onclick="saveChartImage()">Save As Image</button>
+    <div id="gapList" style="font-size: 14px; margin-top: 20px;"></div>
+  </div>
+    
   <script>
     let hasAutoLoaded = false;
     const channelId = "2793071";
@@ -435,7 +430,18 @@ function saveChartImage() {
     link.click();
   });
 }
-    
+functoin bottomWrapperToggle_fn() {
+  const extras = document.getElementById("bottomWrapper");
+  const button = document.getElementById("bottomWrapperToggle");
+
+  if (extras.style.display === "none") {
+    extras.style.display = "block";
+    button.textContent = "[ – ]";
+  } else {
+    extras.style.display = "none";
+    button.textContent = "[ + ]";
+  }
+}
     
 </script>
 </body>
