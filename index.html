@@ -18,9 +18,10 @@
     button { padding: 6px 12px; margin: 4px; font-size: 13px; background-color: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; }
     button:hover {background-color: #1565c0;}
     #headerWrapper {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); max-width: 100%; margin-bottom: 10px;}
-    #headerDateControlWrapper {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); max-width: 100%; margin-bottom: 10px;}
-    #bottomTimeRangeWrapper {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); max-width: 100%; margin-bottom: 10px;}
-    #chartContainer {display: flex; align-items: flex-start; pointer-events: auto; background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); max-width: 100%; margin-bottom: 10px;}   
+    #headerDateControlWrapper {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); max-width: 100%; margin-bottom: 10px;}\
+    #myChartandControl { pointer-events: auto; }
+    #chartContainer { pointer-events: auto; background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); max-width: 100%; margin-bottom: 10px;}   
+    /* #myChartControl {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); max-width: 100%; margin-bottom: 10px;} */
   </style>
 </head>
 
@@ -49,7 +50,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 14:54</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 15:06</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -63,8 +64,22 @@
   </div>
 
   <div id="chartContainer" style="display: flex; align-items: flex-start;">
-      <canvas id="myChart" width="1500" height="650"></canvas>
 
+      <div id="myChartandControl" style="display: flex; flex-direction: column;">
+        <canvas id="myChart" width="1500" height="650"></canvas>
+        <div id="myChartControl"
+          <label>Slide Time Range:</label>
+          <select id="stepSize" style="margin-left: 5px;">
+            <option value="1H">1H</option>
+            <option value="1D">1D</option>
+            <option value="1W" selected>1W</option>
+          </select>  
+          <button onclick="moveWindow('backward')" style="margin-left: 5px;">←</button>
+          <button onclick="moveWindow('forward')">→</button>
+          <button onclick="moistureChart.resetZoom()" style="margin-left: 20px;">Reset Zoom</button>
+        </div>
+      </div>
+     
       <button id="sideWrapperToggle" onclick="sideWrapperToggle_fn()" style="font-size: 12px;">[+]</button>    
       <div id="sideWrapper" style="margin-left: 20px; text-align: left; display:none;">
         <div style="font-size: 16px; color: black; font-weight: bold; text-align: left;">Last Valid Value</div>
@@ -86,17 +101,7 @@
       </div>
   </div>
 
-  <div id="bottomTimeRangeWrapper"
-    <label>Slide Time Range:</label>
-    <select id="stepSize" style="margin-left: 5px;">
-      <option value="1H">1H</option>
-      <option value="1D">1D</option>
-      <option value="1W" selected>1W</option>
-    </select>  
-    <button onclick="moveWindow('backward')" style="margin-left: 5px;">←</button>
-    <button onclick="moveWindow('forward')">→</button>
-    <button onclick="moistureChart.resetZoom()" style="margin-left: 20px;">Reset Zoom</button>
-  </div>
+
   
   <button id="bottomWrapperToggle" onclick="bottomWrapperToggle_fn()" style="font-size: 12px;">[+]</button>
   <div id="bottomWrapper" style="display: none; margin-top: 10px;">
