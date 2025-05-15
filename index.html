@@ -39,7 +39,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-15 09:22</strong>
+  GitHub Version: <strong>2025-05-15 10:42</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -56,15 +56,15 @@
   <br><br>
 
   <label>Slide Time Range:</label>
-  <select id="stepSize" style="margin-left: 10px;">
+  <select id="stepSize" style="margin-left: 5px;">
   <option value="1H">1H</option>
   <option value="1D">1D</option>
   <option value="1W" selected>1W</option>
   </select>
 
-  <button onclick="moveWindow('backward')" style="margin-left: 10px;">←</button>
+  <button onclick="moveWindow('backward')" style="margin-left: 5px;">←</button>
   <button onclick="moveWindow('forward')">→</button>
-  <button onclick="moistureChart.resetZoom()">Reset Zoom</button>
+  <button onclick="moistureChart.resetZoom()" style="margin-left: 20px;">Reset Zoom</button>
   
   <br><br>
   
