@@ -49,7 +49,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 14:40</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 14:43</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -61,10 +61,7 @@
     <input type="time" id="endTimeInput" value="23:59:59" lang="en-GB" step="1">
     <button onclick="loadChart()" style="margin-left: 20px;">Load Chart</button>
   </div>
-  <br>
-  
-  <br>
-  
+
   <div id="chartContainer" style="display: flex; align-items: flex-start;">
       <canvas id="myChart" width="1500" height="650"></canvas>
 
@@ -89,7 +86,7 @@
       </div>
   </div>
 
-  <div id="bottomTimeRageWrapper"
+  <div id="bottomTimeRangeWrapper"
     <label>Slide Time Range:</label>
     <select id="stepSize" style="margin-left: 5px;">
       <option value="1H">1H</option>
@@ -101,7 +98,7 @@
     <button onclick="moistureChart.resetZoom()" style="margin-left: 20px;">Reset Zoom</button>
   </div>
   
-  <button id="bottomWrapperToggle" onclick="bottomWrapperToggle_fn()" style="font-size: 12px;">[ + ]</button>
+  <button id="bottomWrapperToggle" onclick="bottomWrapperToggle_fn()" style="font-size: 12px;">[+]</button>
   <div id="bottomWrapper" style="display: none; margin-top: 10px;">
     <label style="margin-left:0px">Y-Min:</label>
     <input id="yMinInput" type="number" value="-2" onchange="updateYAxis()" style="width:60px;">
@@ -425,10 +422,10 @@ function saveChartImage() {
   
     if (extras.style.display === "none") {
       extras.style.display = "block";
-      button.textContent = "[ – ]";
+      button.textContent = "[–]";
     } else {
       extras.style.display = "none";
-      button.textContent = "[ + ]";
+      button.textContent = "[+]";
     }
   }
 
@@ -438,10 +435,10 @@ function saveChartImage() {
   
     if (extras.style.display === "none") {
       extras.style.display = "block";
-      button.textContent = "[ – ]";
+      button.textContent = "[–]";
     } else {
       extras.style.display = "none";
-      button.textContent = "[ + ]";
+      button.textContent = "[+]";
     }
   }  
     
