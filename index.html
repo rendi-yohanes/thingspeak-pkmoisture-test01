@@ -19,6 +19,7 @@
     button:hover {background-color: #1565c0;}
     #headerWrapper {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); max-width: 100%; margin-bottom: 20px;}
     #headerDateControlWrapper {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); max-width: 100%; margin-bottom: 20px;}
+    #bottomTimeRangeWrapper {background: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); max-width: 100%; margin-bottom: 20px;}
     #chartContainer {display: flex; align-items: flex-start; pointer-events: auto;}   
   </style>
 </head>
@@ -48,7 +49,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 14:37</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 14:40</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -60,21 +61,9 @@
     <input type="time" id="endTimeInput" value="23:59:59" lang="en-GB" step="1">
     <button onclick="loadChart()" style="margin-left: 20px;">Load Chart</button>
   </div>
+  <br>
   
-  <br><br>
-
-  <label>Slide Time Range:</label>
-  <select id="stepSize" style="margin-left: 5px;">
-  <option value="1H">1H</option>
-  <option value="1D">1D</option>
-  <option value="1W" selected>1W</option>
-  </select>
-
-  <button onclick="moveWindow('backward')" style="margin-left: 5px;">←</button>
-  <button onclick="moveWindow('forward')">→</button>
-  <button onclick="moistureChart.resetZoom()" style="margin-left: 20px;">Reset Zoom</button>
-  
-  <br><br>
+  <br>
   
   <div id="chartContainer" style="display: flex; align-items: flex-start;">
       <canvas id="myChart" width="1500" height="650"></canvas>
@@ -100,6 +89,18 @@
       </div>
   </div>
 
+  <div id="bottomTimeRageWrapper"
+    <label>Slide Time Range:</label>
+    <select id="stepSize" style="margin-left: 5px;">
+      <option value="1H">1H</option>
+      <option value="1D">1D</option>
+      <option value="1W" selected>1W</option>
+    </select>  
+    <button onclick="moveWindow('backward')" style="margin-left: 5px;">←</button>
+    <button onclick="moveWindow('forward')">→</button>
+    <button onclick="moistureChart.resetZoom()" style="margin-left: 20px;">Reset Zoom</button>
+  </div>
+  
   <button id="bottomWrapperToggle" onclick="bottomWrapperToggle_fn()" style="font-size: 12px;">[ + ]</button>
   <div id="bottomWrapper" style="display: none; margin-top: 10px;">
     <label style="margin-left:0px">Y-Min:</label>
