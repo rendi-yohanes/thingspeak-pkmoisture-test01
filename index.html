@@ -39,7 +39,7 @@
   
   <h2>Moisture Chart – PK Silo [PEKAWAI MILL]</h2>
   <p style="font-size: 14px; color: gray;">
-  GitHub Version: <strong>2025-05-15 08:16</strong>
+  GitHub Version: <strong>2025-05-15 08:41</strong>
   </p>
   <label for="startDateInput">Start Date: </label>
   <input type="date" id="startDateInput">
@@ -78,24 +78,26 @@
   <div id="chartContainer" style="display: flex; align-items: flex-start;">
       <canvas id="myChart" width="1500" height="650"></canvas>
 
-      <div id="lastValueBox" style="margin-left: 20px; text-align: left;">
-      <div style="font-size: 16px; color: black; font-weight: bold; text-align: left;">Last Valid Value</div>
-      <div id="lastValueDisplay" style="font-size: 14px; color: black; text-align: left;">--</div>
-      <div id="lastValueTime" style="font-size: 14px; color: black; text-align: left;">--</div>
-      
-      <div style="margin-top: 30px; font-size: 16px; color: black; font-weight: bold; text-align: left;">Data Statistics</div>
-      <div id="statMin" style="font-size: 14px;text-align: left;">Min: --</div>
-      <div id="statMax" style="font-size: 14px;text-align: left;">Max: --</div>
-      <div id="statMean" style="font-size: 14px;text-align: left;">Mean: --</div>
-      <div id="statMedian" style="font-size: 14px;text-align: left;">Median: --</div>
-      <div id="statStd" style="font-size: 14px;text-align: left;">Std Dev: --</div>
+
+      <button id="sideWrapperToggle" onclick="sideWrapperToggle_fn() style="font-size: 12px;">[+]</button>    
+      <div id="sideWrapper" style="margin-left: 20px; text-align: left;">
+        <div style="font-size: 16px; color: black; font-weight: bold; text-align: left;">Last Valid Value</div>
+        <div id="lastValueDisplay" style="font-size: 14px; color: black; text-align: left;">--</div>
+        <div id="lastValueTime" style="font-size: 14px; color: black; text-align: left;">--</div>
         
-      <div style="font-size: 16px; color: black; margin-top: 30px; font-weight: bold; text-align: left;">Data Fetch</div>
-      <div id="fetchCount" style="font-size: 14px; color: black; text-align: left;">--</div>
-      <div id="fetchSize" style="font-size: 14px; color: black; text-align: left;">--</div>
-      <div id="fetchDuration" style="font-size: 14px; color: black; text-align: left;">--</div>
-      <div id="fetchTime" style="font-size: 14px; color: black; text-align: left;">--</div>
-    </div>
+        <div style="margin-top: 30px; font-size: 16px; color: black; font-weight: bold; text-align: left;">Data Statistics</div>
+        <div id="statMin" style="font-size: 14px;text-align: left;">Min: --</div>
+        <div id="statMax" style="font-size: 14px;text-align: left;">Max: --</div>
+        <div id="statMean" style="font-size: 14px;text-align: left;">Mean: --</div>
+        <div id="statMedian" style="font-size: 14px;text-align: left;">Median: --</div>
+        <div id="statStd" style="font-size: 14px;text-align: left;">Std Dev: --</div>
+          
+        <div style="font-size: 16px; color: black; margin-top: 30px; font-weight: bold; text-align: left;">Data Fetch</div>
+        <div id="fetchCount" style="font-size: 14px; color: black; text-align: left;">--</div>
+        <div id="fetchSize" style="font-size: 14px; color: black; text-align: left;">--</div>
+        <div id="fetchDuration" style="font-size: 14px; color: black; text-align: left;">--</div>
+        <div id="fetchTime" style="font-size: 14px; color: black; text-align: left;">--</div>
+      </div>
   </div>
 
   <button id="bottomWrapperToggle" onclick="bottomWrapperToggle_fn()" style="font-size: 12px;">[ + ]</button>
@@ -430,18 +432,32 @@ function saveChartImage() {
     link.click();
   });
 }
-function bottomWrapperToggle_fn() {
-  const extras = document.getElementById("bottomWrapper");
-  const button = document.getElementById("bottomWrapperToggle");
 
-  if (extras.style.display === "none") {
-    extras.style.display = "block";
-    button.textContent = "[ – ]";
-  } else {
-    extras.style.display = "none";
-    button.textContent = "[ + ]";
+  function bottomWrapperToggle_fn() {
+    const extras = document.getElementById("bottomWrapper");
+    const button = document.getElementById("bottomWrapperToggle");
+  
+    if (extras.style.display === "none") {
+      extras.style.display = "block";
+      button.textContent = "[ – ]";
+    } else {
+      extras.style.display = "none";
+      button.textContent = "[ + ]";
+    }
   }
-}
+
+  function sideWrapperToggle_fn() {
+    const extras = document.getElementById("sideWrapper");
+    const button = document.getElementById("sideWrapperToggle");
+  
+    if (extras.style.display === "none") {
+      extras.style.display = "block";
+      button.textContent = "[ – ]";
+    } else {
+      extras.style.display = "none";
+      button.textContent = "[ + ]";
+    }
+  }  
     
 </script>
 </body>
