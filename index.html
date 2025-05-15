@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <title>ThingSpeak Chart.js Viewer</title>
   <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>  
@@ -16,9 +17,14 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
-    body { font-family: sans-serif; background-color: #f0f0f0; padding: 20px; }
+    body { font-family: 'Inter',sans-serif; color:#333, background-color: #f9f9f9; margin: 0; padding: 20px; }
     canvas { background-color: #fff; border: 1px solid #ccc; pointer-events: auto; touch-action: auto; }
+    button { padding: 6px 12px; margin: 4px; font-size: 13px; background-color: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover {background-color: #1565c0;}
+</style>
+
     #chartContainer {display: flex; align-items: flex-start; pointer-events: auto;}   /* ✅ Ensure container allows pointer events */
+    
   </style>
 </head>
 <body>
@@ -107,7 +113,11 @@
     <button onclick="saveChartImage()">Save As Image</button>
     <div id="gapList" style="font-size: 14px; margin-top: 20px;"></div>
   </div>
-    
+
+
+
+
+  
   <script>
     let hasAutoLoaded = false;
     const channelId = "2793071";
