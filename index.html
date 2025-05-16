@@ -11,6 +11,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/raphael@2.3.0/raphael.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/justgage"></script>
 
   <style>
     body { font-family: 'Inter',sans-serif; color:#333, background-color: #f0f0f0; margin: 0; padding: 20px; }
@@ -53,7 +55,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 19:16</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 19:25</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -84,6 +86,7 @@
      
       <button id="sideWrapperToggle" onclick="sideWrapperToggle_fn()" style="font-size: 8px;">[+]</button>    
       <div id="sideWrapper" style="margin-left: 20px; text-align: left; display:none;">
+        <div class="group1-title">Last 1-Hour Median</div>
         <canvas id="moistureGauge" width="300" height="150"></canvas>
         
         <div class="group1-title">Last Valid Value</div>
@@ -487,44 +490,26 @@ function saveChartImage() {
       button.textContent = "[+]";
     }
   }
-  function drawGauge(medianValue) {
-  const ctx = document.getElementById('moistureGauge').getContext('2d');
 
-  // Remove previous chart if it exists
-  if (window.moistureGaugeChart) {
-    window.moistureGaugeChart.destroy();
+  function drawGauge(medianValue) {
+    if (window.moistureNeedleGauge) {
+        window.moistureNeedleGauge.refresh(medianValue);
+        return;
+      }
+    
+      window.moistureNeedleGauge = new JustGage({
+        id: "moistureGauge",
+        value: medianValue,
+        min: 0,
+        max: 10,
+        decimals: 2,
+        title: "1-Hour Median",
+        label: "%",
+        levelColors: ["#ff0000", "#00cc00", "#ff9900"],
+        levelColorsThresholds: [6, 7]
+      });
   }
 
-  // Compute percentage
-  const percent = Math.min(Math.max(medianValue / 10, 0), 1); // 0 to 1
-  const mainValue = (percent * 100).toFixed(0);
-  const color = medianValue < 6 ? 'red' : (medianValue > 7 ? 'orange' : 'green');
-
-  window.moistureGaugeChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      datasets: [{
-        data: [percent, 1 - percent],
-        backgroundColor: [color, '#ddd'],
-        borderWidth: 0,
-        cutout: '80%'
-      }]
-    },
-    options: {
-      rotation: -90,
-      circumference: 180,
-      plugins: {
-        tooltip: { enabled: false },
-        legend: { display: false },
-        title: {
-          display: true,
-          text: `1-Hour Median: ${medianValue.toFixed(2)}`,
-          font: { size: 14 }
-        }
-      }
-    }
-  });
-}  
     
 </script>
 </body>
