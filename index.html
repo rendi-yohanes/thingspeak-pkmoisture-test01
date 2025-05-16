@@ -57,7 +57,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 20:25</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 20:31</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -301,7 +301,7 @@
           document.getElementById("fetchTime").textContent = `Fetched at: ${fetchTime}`;
 
           // Calculate Gauge
-          const oneHourAgo = new Date(now.getTime() - 3600 * 1000);
+          const oneHourAgo = new Date(now.getTime() - 12 * 3600 * 1000);
           const valuesLastHour = feeds
             .filter(f => f.created_at && new Date(f.created_at) >= oneHourAgo)
             .map(f => parseFloat(f[`field${field}`]))
