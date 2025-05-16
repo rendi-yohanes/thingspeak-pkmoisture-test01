@@ -53,7 +53,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-15 17:10</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 19:16</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -84,6 +84,7 @@
      
       <button id="sideWrapperToggle" onclick="sideWrapperToggle_fn()" style="font-size: 8px;">[+]</button>    
       <div id="sideWrapper" style="margin-left: 20px; text-align: left; display:none;">
+        <canvas id="moistureGauge" width="300" height="150"></canvas>
         
         <div class="group1-title">Last Valid Value</div>
         <div id="lastValueDisplay" class="group1-text">--</div>
@@ -292,7 +293,16 @@
           document.getElementById("fetchSize").textContent = `Size: ${sizeKB} KB`;
           document.getElementById("fetchDuration").textContent = `Duration: ${fetchDuration} ms`;
           document.getElementById("fetchTime").textContent = `Fetched at: ${fetchTime}`;
-   
+
+          // Calculate Gauge
+          const oneHourAgo = new Date(now.getTime() - 3600 * 1000);
+          const valuesLastHour = feeds
+            .filter(f => f.created_at && new Date(f.created_at) >= oneHourAgo)
+            .map(f => parseFloat(f[`field${field}`]))
+            .filter(v => !isNaN(v));
+          const medianLastHour = valuesLastHour.length > 0 ? calculateMedian(valuesLastHour) : 0;
+          drawGauge(medianLastHour);
+          
           // Force chart canvas dimension
           const canvas = document.getElementById("myChart");
           canvas.width = chartConfig.width;
@@ -476,7 +486,45 @@ function saveChartImage() {
       extras.style.display = "none";
       button.textContent = "[+]";
     }
-  }  
+  }
+  function drawGauge(medianValue) {
+  const ctx = document.getElementById('moistureGauge').getContext('2d');
+
+  // Remove previous chart if it exists
+  if (window.moistureGaugeChart) {
+    window.moistureGaugeChart.destroy();
+  }
+
+  // Compute percentage
+  const percent = Math.min(Math.max(medianValue / 10, 0), 1); // 0 to 1
+  const mainValue = (percent * 100).toFixed(0);
+  const color = medianValue < 6 ? 'red' : (medianValue > 7 ? 'orange' : 'green');
+
+  window.moistureGaugeChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      datasets: [{
+        data: [percent, 1 - percent],
+        backgroundColor: [color, '#ddd'],
+        borderWidth: 0,
+        cutout: '80%'
+      }]
+    },
+    options: {
+      rotation: -90,
+      circumference: 180,
+      plugins: {
+        tooltip: { enabled: false },
+        legend: { display: false },
+        title: {
+          display: true,
+          text: `1-Hour Median: ${medianValue.toFixed(2)}`,
+          font: { size: 14 }
+        }
+      }
+    }
+  });
+}  
     
 </script>
 </body>
