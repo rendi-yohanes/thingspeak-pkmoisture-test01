@@ -57,7 +57,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 19:29</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 19:36</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -306,7 +306,7 @@
             .map(f => parseFloat(f[`field${field}`]))
             .filter(v => !isNaN(v));
           const medianLastHour = valuesLastHour.length > 0 ? calculateMedian(valuesLastHour) : 0;
-          drawGauge(medianLastHour);
+
           
           // Force chart canvas dimension
           const canvas = document.getElementById("myChart");
@@ -487,6 +487,7 @@ function saveChartImage() {
     if (extras.style.display === "none") {
       extras.style.display = "block";
       button.textContent = "[–]";
+      drawGauge(medianLastHour);
     } else {
       extras.style.display = "none";
       button.textContent = "[+]";
