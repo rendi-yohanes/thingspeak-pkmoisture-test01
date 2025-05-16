@@ -301,7 +301,7 @@
           document.getElementById("fetchTime").textContent = `Fetched at: ${fetchTime}`;
 
           // Calculate Gauge
-          const oneHourAgo = new Date(now.getTime() - 12 * 3600 * 1000);
+          const oneHourAgo = new Date(now.getTime() - 1 * 3600 * 1000);
           const valuesLastHour = feeds
             .filter(f => f.created_at && new Date(f.created_at) >= oneHourAgo)
             .map(f => parseFloat(f[`field${field}`]))
