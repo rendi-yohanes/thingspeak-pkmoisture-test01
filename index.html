@@ -57,7 +57,7 @@
 
   <div id="headerWrapper">
     <h2 style="margin: 0 0 4px 0;">[Mill: Pekawai] Moisture Chart – PK Silo</h2>
-    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 20:01</strong> </p>
+    <p style="font-size: 12px; color: LightGray; margin: 0 0 0 0">GitHub Version: <strong>2025-05-16 20:09</strong> </p>
   </div>
 
   <div id="headerDateControlWrapper"
@@ -88,7 +88,7 @@
      
       <button id="sideWrapperToggle" onclick="sideWrapperToggle_fn()" style="font-size: 8px;">[+]</button>    
       <div id="sideWrapper" style="margin-left: 20px; text-align: left; display:none;">
-        <div class="group1-title">Last 1-Hour Median</div>
+        <div class="group1-title">Last 1-Hour Average</div>
         <div id="moistureGauge" width="300" height="150"></div>
         
         <div class="group1-title">Last Valid Value</div>
@@ -133,7 +133,7 @@
     const field = 1;
     const apiKey = "BL9H0JXPJEA08H3G";
     let moistureChart = null;
-    let medianLastHour = null;
+    let averageLastHour = null;
     
     const chartConfig = {width: 1500, height: 650, yMin: -2, yMax: 20};
     
@@ -306,7 +306,7 @@
             .filter(f => f.created_at && new Date(f.created_at) >= oneHourAgo)
             .map(f => parseFloat(f[`field${field}`]))
             .filter(v => !isNaN(v));
-          medianLastHour = valuesLastHour.length > 0 ? calculateMedian(valuesLastHour) : 0;
+          averageLastHour = valuesLastHour / valuesLastHour.length : 0;
 
           
           // Force chart canvas dimension
@@ -488,26 +488,26 @@ function saveChartImage() {
     if (extras.style.display === "none") {
       extras.style.display = "block";
       button.textContent = "[–]";
-      drawGauge(medianLastHour);
+      drawGauge(averageLastHour);
     } else {
       extras.style.display = "none";
       button.textContent = "[+]";
     }
   }
 
-  function drawGauge(medianValue) {
+  function drawGauge(averageValue) {
     if (window.moistureNeedleGauge) {
-        window.moistureNeedleGauge.refresh(medianValue);
+        window.moistureNeedleGauge.refresh(averageValue);
         return;
       }
     
       window.moistureNeedleGauge = new JustGage({
         id: "moistureGauge",
-        value: medianValue,
+        value: averageValue,
         min: 0,
         max: 10,
         decimals: 2,
-        title: "1-Hour Median",
+        title: "1-Hour Average",
         label: "%",
         levelColors: ["#ff0000", "#00cc00", "#ff9900"],
         levelColorsThresholds: [6, 7]
